@@ -1,0 +1,89 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Currency Converter API",
+    "version": "1.0.0",
+    "description": "API documentation for currency conversion."
+  },
+  "paths": {
+    "/api/rates": {
+      "get": {
+        "summary": "Get exchange rates",
+        "parameters": [
+          {
+            "name": "base",
+            "in": "query",
+            "description": "Base currency (default: USD)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "USD"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "base": "USD",
+                  "rates": {
+                    "EUR": 0.85,
+                    "GBP": 0.75
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/convert": {
+      "post": {
+        "summary": "Convert currency",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  }
+                }
+              },
+              "example": {
+                "from": "USD",
+                "to": "EUR",
+                "amount": 100
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful conversion",
+            "content": {
+              "application/json": {
+                "example": {
+                  "from": "USD",
+                  "to": "EUR",
+                  "amount": 100,
+                  "convertedAmount": 85
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
